@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import type React from 'react'
 import { gsap } from '@/utils/gsap'
 import { useCursor } from '@/context/CursorContext'
 import { ConfigStep } from './ConfigStep'
@@ -52,13 +53,25 @@ export function Config() {
 
   const isLast = step === CONFIG_STEPS.length - 1
 
+  const MONOLITH_EASE = 'cubic-bezier(0.8, 0, 0.1, 1)'
+
+  const navBtnBase: React.CSSProperties = {
+    padding: '18px 40px',
+    background: 'transparent',
+    fontFamily: '"Space Mono", monospace',
+    fontSize: 11,
+    letterSpacing: '0.18em',
+    textTransform: 'uppercase',
+    cursor: 'none',
+    transition: `background 0.3s ${MONOLITH_EASE}, color 0.3s ${MONOLITH_EASE}`,
+  }
+
   return (
     <section
       id="configure"
       style={{
         backgroundColor: '#1B2228',
-        padding: '0 48px 120px',
-        minHeight: '100vh',
+        padding: '120px 48px',
       }}
     >
       <div style={{ maxWidth: 900 }}>
@@ -69,10 +82,22 @@ export function Config() {
             letterSpacing: '0.18em',
             color: '#A8A9AD',
             textTransform: 'uppercase',
-            marginBottom: 24,
+            marginBottom: 12,
           }}
         >
           Configure Your Programme
+        </p>
+        <p
+          style={{
+            fontFamily: '"Space Mono", monospace',
+            fontSize: 11,
+            letterSpacing: '0.18em',
+            color: '#4B5563',
+            textTransform: 'uppercase',
+            marginBottom: 48,
+          }}
+        >
+          STEP {String(step + 1).padStart(2, '0')} / {String(CONFIG_STEPS.length).padStart(2, '0')}
         </p>
 
         {!submitted ? (
@@ -93,16 +118,18 @@ export function Config() {
               {step > 0 && (
                 <button
                   onClick={() => animateStep(step - 1)}
+                  onMouseOver={e => {
+                    e.currentTarget.style.background = '#2C302E'
+                    e.currentTarget.style.color = '#ffffff'
+                  }}
+                  onMouseOut={e => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.color = '#A8A9AD'
+                  }}
                   style={{
-                    padding: '16px 32px',
-                    backgroundColor: '#1B2228',
+                    ...navBtnBase,
+                    border: '1px solid #2C302E',
                     color: '#A8A9AD',
-                    fontFamily: '"Space Mono", monospace',
-                    fontSize: 12,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    border: 'none',
-                    cursor: 'none',
                   }}
                 >
                   ← Back
@@ -111,16 +138,18 @@ export function Config() {
               {!isLast ? (
                 <button
                   onClick={() => animateStep(step + 1)}
+                  onMouseOver={e => {
+                    e.currentTarget.style.background = '#ffffff'
+                    e.currentTarget.style.color = '#0d141a'
+                  }}
+                  onMouseOut={e => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.color = '#ffffff'
+                  }}
                   style={{
-                    padding: '16px 32px',
-                    backgroundColor: '#2C302E',
+                    ...navBtnBase,
+                    border: '1px solid #ffffff',
                     color: '#ffffff',
-                    fontFamily: '"Space Mono", monospace',
-                    fontSize: 12,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    border: 'none',
-                    cursor: 'none',
                   }}
                 >
                   Next →
@@ -128,19 +157,21 @@ export function Config() {
               ) : (
                 <button
                   onClick={handleSubmit}
+                  onMouseOver={e => {
+                    e.currentTarget.style.background = '#ffffff'
+                    e.currentTarget.style.color = '#0d141a'
+                  }}
+                  onMouseOut={e => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.color = '#ffffff'
+                  }}
                   style={{
-                    padding: '16px 32px',
-                    backgroundColor: '#2C302E',
+                    ...navBtnBase,
+                    border: '1px solid #ffffff',
                     color: '#ffffff',
-                    fontFamily: '"Space Mono", monospace',
-                    fontSize: 12,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    border: 'none',
-                    cursor: 'none',
                   }}
                 >
-                  Transmit
+                  Transmit →
                 </button>
               )}
             </div>

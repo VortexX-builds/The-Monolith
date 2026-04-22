@@ -111,9 +111,9 @@ export function Cursor() {
           ref={labelRef}
           style={{
             position: 'absolute',
-            top: '50%',
+            top: 'calc(100% + 8px)',
             left: '50%',
-            transform: 'translate(-50%, -50%)',
+            transform: 'translateX(-50%)',
             fontFamily: '"Space Mono", monospace',
             fontSize: 10,
             letterSpacing: '0.12em',
