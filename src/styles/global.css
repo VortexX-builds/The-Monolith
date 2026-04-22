@@ -102,10 +102,10 @@ img {
   .roster-grid    { grid-template-columns: 1fr !important; }
 
   /* Config */
-  .config-section { padding-left: 20px !important; padding-right: 20px !important; }
+  .config-section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 60px !important; padding-bottom: 60px !important; }
 
   /* Contact */
-  .contact-section { padding-left: 20px !important; padding-right: 20px !important; }
+  .contact-section { padding-left: 20px !important; padding-right: 20px !important; padding-top: 60px !important; padding-bottom: 60px !important; }
   .contact-grid {
     grid-template-columns: 1fr !important;
     gap: 48px !important;
@@ -140,8 +140,8 @@ img {
   .hero-headline   { padding: 70px 16px 32px !important; }
   .arsenal-section { padding-left: 16px !important; padding-right: 16px !important; }
   .roster-section  { padding-left: 16px !important; padding-right: 16px !important; }
-  .config-section  { padding-left: 16px !important; padding-right: 16px !important; }
-  .contact-section { padding-left: 16px !important; padding-right: 16px !important; }
+  .config-section  { padding-left: 16px !important; padding-right: 16px !important; padding-top: 48px !important; padding-bottom: 48px !important; }
+  .contact-section { padding-left: 16px !important; padding-right: 16px !important; padding-top: 48px !important; padding-bottom: 48px !important; }
   .footer-shell    { padding: 20px 16px !important; }
   .footer-links    { gap: 16px !important; flex-wrap: wrap !important; }
   .marquee-wrap    { margin: 28px 0 !important; }

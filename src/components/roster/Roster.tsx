@@ -14,7 +14,7 @@ export function Roster() {
       className="roster-section"
       style={{
         backgroundColor: '#0d141a',
-        padding: '0 48px 120px',
+        padding: '0 48px',
       }}
     >
       <div style={{ marginBottom: 80 }}>

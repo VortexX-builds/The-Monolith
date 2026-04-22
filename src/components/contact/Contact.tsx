@@ -98,7 +98,7 @@ export function Contact({ programme }: ContactProps) {
       className="contact-section"
       style={{
         backgroundColor: '#1B2228',
-        padding: '120px 48px',
+        padding: '80px 48px',
       }}
     >
       <div style={{ marginBottom: 80 }}>

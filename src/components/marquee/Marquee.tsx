@@ -28,7 +28,7 @@ export function Marquee() {
       className="marquee-wrap"
       style={{
         height: 56,
-        margin: '72px 0',
+        margin: '48px 0',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',

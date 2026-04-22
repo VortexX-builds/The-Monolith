@@ -77,7 +77,7 @@ export function Config({ onProgrammeComplete }: ConfigProps) {
       className="config-section"
       style={{
         backgroundColor: '#1B2228',
-        padding: '120px 48px',
+        padding: '80px 48px',
       }}
     >
       <div style={{ maxWidth: 900 }}>
