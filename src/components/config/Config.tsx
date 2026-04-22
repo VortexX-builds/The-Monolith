@@ -2,16 +2,20 @@ import { useRef, useState } from 'react'
 import type React from 'react'
 import { gsap } from '@/utils/gsap'
 import { useCursor } from '@/context/CursorContext'
+import { useNavigation } from '@/context/NavigationContext'
 import { ConfigStep } from './ConfigStep'
-import { ConfigOutput } from './ConfigOutput'
 import { CONFIG_STEPS } from '@/constants/config-options'
 
-export function Config() {
+interface ConfigProps {
+  onProgrammeComplete: (selections: Record<string, string[]>) => void
+}
+
+export function Config({ onProgrammeComplete }: ConfigProps) {
   const [step, setStep] = useState(0)
   const [selections, setSelections] = useState<Record<string, string[]>>({})
-  const [submitted, setSubmitted] = useState(false)
   const stepRef = useRef<HTMLDivElement>(null)
   const { setLabel } = useCursor()
+  const { navigateTo } = useNavigation()
 
   const currentKey = CONFIG_STEPS[step].key
 
@@ -45,10 +49,11 @@ export function Config() {
 
   const handleSubmit = () => {
     setLabel('[ TRANSMIT ]')
+    onProgrammeComplete(selections)
     setTimeout(() => {
-      setSubmitted(true)
       setLabel('')
-    }, 1200)
+      navigateTo('contact')
+    }, 800)
   }
 
   const isLast = step === CONFIG_STEPS.length - 1
@@ -100,98 +105,79 @@ export function Config() {
           STEP {String(step + 1).padStart(2, '0')} / {String(CONFIG_STEPS.length).padStart(2, '0')}
         </p>
 
-        {!submitted ? (
-          <>
-            <div ref={stepRef}>
-              {CONFIG_STEPS.map((s, i) => (
-                <ConfigStep
-                  key={s.key}
-                  step={s}
-                  active={i === step}
-                  selections={selections[s.key] ?? []}
-                  onToggle={handleToggle}
-                />
-              ))}
-            </div>
+        <div ref={stepRef}>
+          {CONFIG_STEPS.map((s, i) => (
+            <ConfigStep
+              key={s.key}
+              step={s}
+              active={i === step}
+              selections={selections[s.key] ?? []}
+              onToggle={handleToggle}
+            />
+          ))}
+        </div>
 
-            <div style={{ display: 'flex', gap: 16, marginTop: 64 }}>
-              {step > 0 && (
-                <button
-                  onClick={() => animateStep(step - 1)}
-                  onMouseOver={e => {
-                    e.currentTarget.style.background = '#2C302E'
-                    e.currentTarget.style.color = '#ffffff'
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = '#A8A9AD'
-                  }}
-                  style={{
-                    ...navBtnBase,
-                    border: '1px solid #2C302E',
-                    color: '#A8A9AD',
-                  }}
-                >
-                  ← Back
-                </button>
-              )}
-              {!isLast ? (
-                <button
-                  onClick={() => animateStep(step + 1)}
-                  onMouseOver={e => {
-                    e.currentTarget.style.background = '#ffffff'
-                    e.currentTarget.style.color = '#0d141a'
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = '#ffffff'
-                  }}
-                  style={{
-                    ...navBtnBase,
-                    border: '1px solid #ffffff',
-                    color: '#ffffff',
-                  }}
-                >
-                  Next →
-                </button>
-              ) : (
-                <button
-                  onClick={handleSubmit}
-                  onMouseOver={e => {
-                    e.currentTarget.style.background = '#ffffff'
-                    e.currentTarget.style.color = '#0d141a'
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = '#ffffff'
-                  }}
-                  style={{
-                    ...navBtnBase,
-                    border: '1px solid #ffffff',
-                    color: '#ffffff',
-                  }}
-                >
-                  Transmit →
-                </button>
-              )}
-            </div>
-          </>
-        ) : (
-          <div>
-            <h3
+        <div style={{ display: 'flex', gap: 16, marginTop: 64 }}>
+          {step > 0 && (
+            <button
+              onClick={() => animateStep(step - 1)}
+              onMouseOver={e => {
+                e.currentTarget.style.background = '#2C302E'
+                e.currentTarget.style.color = '#ffffff'
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.color = '#A8A9AD'
+              }}
               style={{
-                fontFamily: '"Monument Extended", sans-serif',
-                fontWeight: 800,
-                fontSize: 'clamp(28px, 4vw, 56px)',
-                color: '#ffffff',
-                marginBottom: 48,
+                ...navBtnBase,
+                border: '1px solid #2C302E',
+                color: '#A8A9AD',
               }}
             >
-              Programme Received.
-            </h3>
-            <ConfigOutput selections={selections} />
-          </div>
-        )}
+              ← Back
+            </button>
+          )}
+          {!isLast ? (
+            <button
+              onClick={() => animateStep(step + 1)}
+              onMouseOver={e => {
+                e.currentTarget.style.background = '#ffffff'
+                e.currentTarget.style.color = '#0d141a'
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.color = '#ffffff'
+              }}
+              style={{
+                ...navBtnBase,
+                border: '1px solid #ffffff',
+                color: '#ffffff',
+              }}
+            >
+              Next →
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              onMouseOver={e => {
+                e.currentTarget.style.background = '#ffffff'
+                e.currentTarget.style.color = '#0d141a'
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.color = '#ffffff'
+              }}
+              style={{
+                ...navBtnBase,
+                border: '1px solid #ffffff',
+                color: '#ffffff',
+              }}
+            >
+              Transmit →
+            </button>
+          )}
+        </div>
       </div>
     </section>
   )

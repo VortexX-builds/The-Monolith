@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type React from 'react'
 import { useCursor } from '@/context/CursorContext'
+import { CONFIG_STEPS } from '@/constants/config-options'
 import logoSrc from '@/assets/logo-removebg.png'
 
 const MONOLITH_EASE = 'cubic-bezier(0.8, 0, 0.1, 1)'
@@ -11,9 +12,9 @@ const SOCIALS = [
     href: 'https://instagram.com/themonolith',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none" />
       </svg>
     ),
   },
@@ -22,7 +23,7 @@ const SOCIALS = [
     href: 'https://x.com/themonolith',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
       </svg>
     ),
   },
@@ -31,13 +32,25 @@ const SOCIALS = [
     href: 'https://facebook.com/themonolith',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
       </svg>
     ),
   },
 ]
 
-export function Contact() {
+function formatProgramme(programme: Record<string, string[]>): string {
+  return CONFIG_STEPS.map((step) => {
+    const chosen = programme[step.key] ?? []
+    const labels = chosen.map((id) => step.options.find((o) => o.id === id)?.label ?? id)
+    return `${step.title.toUpperCase()}: ${labels.length ? labels.join(', ') : '—'}`
+  }).join('\n')
+}
+
+interface ContactProps {
+  programme?: Record<string, string[]> | null
+}
+
+export function Contact({ programme }: ContactProps) {
   const { setLabel } = useCursor()
   const [focused, setFocused] = useState<string | null>(null)
   const [form, setForm] = useState({ name: '', phone: '', message: '' })
@@ -45,8 +58,11 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const subject = encodeURIComponent('MONOLITH — NEW ENQUIRY')
+    const programmeBlock = programme
+      ? `YOUR CONFIGURED PROGRAMME:\n${formatProgramme(programme)}\n\n`
+      : ''
     const body = encodeURIComponent(
-      `NAME: ${form.name}\nNUMBER: ${form.phone}\n\nMESSAGE:\n${form.message}`
+      `${programmeBlock}NAME: ${form.name}\nNUMBER: ${form.phone}\n\nMESSAGE:\n${form.message}`
     )
     window.location.href = `mailto:info@themonolith.com?subject=${subject}&body=${body}`
   }
@@ -135,11 +151,7 @@ export function Contact() {
           <img
             src={logoSrc}
             alt="The Monolith"
-            style={{
-              width: 100,
-              filter: 'grayscale(1)',
-              display: 'block',
-            }}
+            style={{ width: 100, filter: 'grayscale(1)', display: 'block' }}
           />
 
           <div>
@@ -169,8 +181,73 @@ export function Contact() {
             </p>
           </div>
 
+          <p
+            style={{
+              fontFamily: '"Space Mono", monospace',
+              fontSize: 15.5,
+              lineHeight: 2,
+              letterSpacing: '0.04em',
+              color: '#c5c6ca',
+            }}
+          >
+            The Monolith is built for those who train with intent. An industrial-grade facility
+            designed around performance — no distractions, no compromises. Whether you're
+            chasing strength, endurance, or your next level, this is where the work gets done.
+          </p>
+
           <div style={{ height: 1, backgroundColor: '#2C302E' }} />
 
+          {/* Contact Info */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div>
+              <p style={{ ...labelStyle, marginBottom: 4 }}>Founder</p>
+              <p style={{
+                fontFamily: '"Space Mono", monospace',
+                fontSize: 15.5,
+                letterSpacing: '0.06em',
+                color: '#ffffff',
+              }}>
+                James Claire
+              </p>
+            </div>
+            <div>
+              <p style={{ ...labelStyle, marginBottom: 4 }}>Email</p>
+              <p style={{
+                fontFamily: '"Space Mono", monospace',
+                fontSize: 15.5,
+                letterSpacing: '0.06em',
+                color: '#ffffff',
+              }}>
+                info@themonolith.com
+              </p>
+            </div>
+            <div>
+              <p style={{ ...labelStyle, marginBottom: 4 }}>Phone</p>
+              <p style={{
+                fontFamily: '"Space Mono", monospace',
+                fontSize: 15.5,
+                letterSpacing: '0.06em',
+                color: '#ffffff',
+              }}>
+                [+91 123 456 789]
+              </p>
+            </div>
+            <div>
+              <p style={{ ...labelStyle, marginBottom: 4 }}>Location</p>
+              <p style={{
+                fontFamily: '"Space Mono", monospace',
+                fontSize: 15.5,
+                letterSpacing: '0.06em',
+                color: '#ffffff',
+              }}>
+                Bangalore, India
+              </p>
+            </div>
+          </div>
+
+          <div style={{ height: 1, backgroundColor: '#2C302E' }} />
+
+          {/* Socials */}
           <div style={{ display: 'flex', gap: 24 }}>
             {SOCIALS.map(({ name, href, icon }) => (
               <a
@@ -198,83 +275,122 @@ export function Contact() {
         </div>
 
         {/* Right — Form */}
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: 'flex', flexDirection: 'column', gap: 40 }}
-        >
-          <div>
-            <label style={labelStyle}>Name</label>
-            <input
-              type="text"
-              required
-              value={form.name}
-              onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-              onFocus={() => { setFocused('name'); setLabel('[ IDENTIFY ]') }}
-              onBlur={() => { setFocused(null); setLabel('') }}
-              style={fieldStyle('name')}
-            />
-          </div>
-
-          <div>
-            <label style={labelStyle}>Number</label>
-            <input
-              type="tel"
-              value={form.phone}
-              onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-              onFocus={() => { setFocused('phone'); setLabel('[ IDENTIFY ]') }}
-              onBlur={() => { setFocused(null); setLabel('') }}
-              style={fieldStyle('phone')}
-            />
-          </div>
-
-          <div>
-            <label style={labelStyle}>Message</label>
-            <textarea
-              required
-              rows={5}
-              value={form.message}
-              onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-              onFocus={() => { setFocused('message'); setLabel('[ TRANSMIT ]') }}
-              onBlur={() => { setFocused(null); setLabel('') }}
+        <div>
+          {/* Programme summary — only shown when coming from Config */}
+          {programme && (
+            <div
               style={{
-                ...fieldStyle('message'),
-                resize: 'none',
-                display: 'block',
-              }}
-            />
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              onMouseEnter={() => setLabel('[ TRANSMIT ]')}
-              onMouseLeave={() => setLabel('')}
-              style={{
-                background: 'transparent',
-                border: '1px solid #ffffff',
-                color: '#ffffff',
-                fontFamily: '"Space Mono", monospace',
-                fontSize: 11,
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                padding: '18px 40px',
-                cursor: 'none',
-                borderRadius: 0,
-                transition: `background 0.3s ${MONOLITH_EASE}, color 0.3s ${MONOLITH_EASE}`,
-              }}
-              onMouseOver={e => {
-                e.currentTarget.style.background = '#ffffff'
-                e.currentTarget.style.color = '#0d141a'
-              }}
-              onMouseOut={e => {
-                e.currentTarget.style.background = 'transparent'
-                e.currentTarget.style.color = '#ffffff'
+                backgroundColor: '#0d141a',
+                padding: '24px 28px',
+                marginBottom: 48,
               }}
             >
-              Transmit &rarr;
-            </button>
-          </div>
-        </form>
+              <p
+                style={{
+                  fontFamily: '"Space Mono", monospace',
+                  fontSize: 10,
+                  letterSpacing: '0.18em',
+                  color: '#A8A9AD',
+                  textTransform: 'uppercase',
+                  marginBottom: 16,
+                }}
+              >
+                Your Configured Programme
+              </p>
+              <pre
+                style={{
+                  fontFamily: '"Space Mono", monospace',
+                  fontSize: 11,
+                  color: '#c5c6ca',
+                  lineHeight: 2,
+                  whiteSpace: 'pre-wrap',
+                  letterSpacing: '0.04em',
+                  margin: 0,
+                }}
+              >
+                {formatProgramme(programme)}
+              </pre>
+            </div>
+          )}
+
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', flexDirection: 'column', gap: 40 }}
+          >
+            <div>
+              <label style={labelStyle}>Name</label>
+              <input
+                type="text"
+                required
+                value={form.name}
+                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                onFocus={() => { setFocused('name'); setLabel('[ IDENTIFY ]') }}
+                onBlur={() => { setFocused(null); setLabel('') }}
+                style={fieldStyle('name')}
+              />
+            </div>
+
+            <div>
+              <label style={labelStyle}>Number</label>
+              <input
+                type="tel"
+                value={form.phone}
+                onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                onFocus={() => { setFocused('phone'); setLabel('[ IDENTIFY ]') }}
+                onBlur={() => { setFocused(null); setLabel('') }}
+                style={fieldStyle('phone')}
+              />
+            </div>
+
+            <div>
+              <label style={labelStyle}>Message</label>
+              <textarea
+                required
+                rows={5}
+                value={form.message}
+                onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                onFocus={() => { setFocused('message'); setLabel('[ TRANSMIT ]') }}
+                onBlur={() => { setFocused(null); setLabel('') }}
+                style={{
+                  ...fieldStyle('message'),
+                  resize: 'none',
+                  display: 'block',
+                }}
+              />
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                onMouseEnter={() => setLabel('[ TRANSMIT ]')}
+                onMouseLeave={() => setLabel('')}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid #ffffff',
+                  color: '#ffffff',
+                  fontFamily: '"Space Mono", monospace',
+                  fontSize: 11,
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  padding: '18px 40px',
+                  cursor: 'none',
+                  borderRadius: 0,
+                  transition: `background 0.3s ${MONOLITH_EASE}, color 0.3s ${MONOLITH_EASE}`,
+                }}
+                onMouseOver={e => {
+                  e.currentTarget.style.background = '#ffffff'
+                  e.currentTarget.style.color = '#0d141a'
+                }}
+                onMouseOut={e => {
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.color = '#ffffff'
+                }}
+              >
+                Transmit &rarr;
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   )

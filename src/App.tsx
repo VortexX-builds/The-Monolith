@@ -14,6 +14,7 @@ import { Contact } from '@/components/contact/Contact'
 export function App() {
   const [preloaderDone, setPreloaderDone] = useState(false)
   const [navTarget, setNavTarget] = useState<string | null>(null)
+  const [programme, setProgramme] = useState<Record<string, string[]> | null>(null)
 
   return (
     <CursorProvider>
@@ -31,9 +32,9 @@ export function App() {
           <Marquee />
           <Roster />
           <Marquee />
-          <Config />
+          <Config onProgrammeComplete={setProgramme} />
           <Marquee />
-          <Contact />
+          <Contact programme={programme} />
         </Root>
       </NavigationContext.Provider>
     </CursorProvider>
