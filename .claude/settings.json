@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(src/**)",
+      "Write(src/**)",
+      "Read(public/**)",
+      "Read(vite.config.*)",
+      "Read(tailwind.config.*)",
+      "Read(package.json)",
+      "Read(package-lock.json)",
+      "Read(CLAUDE.md)",
+      "Read(.claude/**)"
+    ],
+    "deny": [
+      "Write(CLAUDE.md)",
+      "Write(.claude/**)",
+      "Write(public/**)",
+      "Write(vite.config.*)",
+      "Write(tailwind.config.*)",
+      "Write(package.json)",
+      "Write(package-lock.json)"
+    ]
+  },
+  "notes": {
+    "src/": "Full read/write access.",
+    "public/ and root config files": "Read access. Write only on explicit user instruction — deny rules above must be removed first.",
+    "CLAUDE.md and .claude/": "Read only. Never overwrite."
+  }
+}
