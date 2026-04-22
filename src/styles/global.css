@@ -16,6 +16,7 @@ html {
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 body {
@@ -39,4 +40,105 @@ img {
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
+}
+
+/* ─── Hamburger lines ─────────────────────────────────────── */
+.nav-hamburger-line {
+  display: block;
+  width: 22px;
+  height: 1px;
+  background-color: #ffffff;
+  transition: transform 0.3s cubic-bezier(0.8, 0, 0.1, 1);
+  transform-origin: center;
+}
+
+.nav-hamburger.is-open .nav-hamburger-line:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.nav-hamburger.is-open .nav-hamburger-line:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* ─── Mobile: ≤ 1023px (all phones + foldables unfolded) ─── */
+@media (max-width: 1023px) {
+  /* Navbar */
+  .nav-shell   { padding: 20px 20px !important; }
+  .nav-links   { display: none !important; }
+  .nav-date    { display: none !important; }
+  .nav-hamburger {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 7px;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    background: transparent;
+    border: none;
+  }
+
+  /* Hero */
+  .hero-headline {
+    padding: 80px 20px 40px !important;
+    max-width: 100% !important;
+  }
+  .hero-ctas  { gap: 20px !important; flex-wrap: wrap !important; }
+  .hero-stats { gap: 16px !important; flex-wrap: wrap !important; }
+
+  /* Arsenal */
+  .arsenal-section  { padding-left: 20px !important; padding-right: 20px !important; }
+  .arsenal-grid     { grid-template-columns: 1fr !important; }
+  .arsenal-heading-title { max-width: 100% !important; }
+
+  /* Roster */
+  .roster-section { padding-left: 20px !important; padding-right: 20px !important; }
+  .roster-grid    { grid-template-columns: 1fr !important; }
+
+  /* Config */
+  .config-section { padding-left: 20px !important; padding-right: 20px !important; }
+
+  /* Contact */
+  .contact-section { padding-left: 20px !important; padding-right: 20px !important; }
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  .contact-social-link { padding: 12px; }
+  .contact-submit-btn  { padding: 22px 40px !important; min-height: 44px; }
+  .config-toggle-btn   { padding: 20px 24px !important; min-height: 44px; }
+  .config-nav-btn      { padding: 20px 32px !important; min-height: 44px; }
+
+  /* Ethos — vertical stack */
+  .ethos-section { height: auto !important; padding: 80px 0 !important; }
+  .ethos-inner   { height: auto !important; overflow: visible !important; }
+  .ethos-track {
+    flex-direction: column !important;
+    white-space: normal !important;
+    gap: 60px !important;
+    padding: 0 20px !important;
+    align-items: flex-start !important;
+  }
+
+  /* Marquee */
+  .marquee-wrap { margin: 40px 0 !important; }
+
+  /* Footer */
+  .footer-shell { padding: 24px 20px !important; }
+  .footer-links { gap: 20px !important; }
+  .footer-links a { padding: 10px 0; display: inline-block; }
+}
+
+/* ─── Small phones: ≤ 479px ─────────────────────────────── */
+@media (max-width: 479px) {
+  .hero-headline   { padding: 70px 16px 32px !important; }
+  .arsenal-section { padding-left: 16px !important; padding-right: 16px !important; }
+  .roster-section  { padding-left: 16px !important; padding-right: 16px !important; }
+  .config-section  { padding-left: 16px !important; padding-right: 16px !important; }
+  .contact-section { padding-left: 16px !important; padding-right: 16px !important; }
+  .footer-shell    { padding: 20px 16px !important; }
+  .footer-links    { gap: 16px !important; flex-wrap: wrap !important; }
+  .marquee-wrap    { margin: 28px 0 !important; }
+  .ethos-track     { padding: 0 16px !important; }
 }

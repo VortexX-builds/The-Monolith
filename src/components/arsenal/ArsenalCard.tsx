@@ -1,6 +1,7 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { gsap } from '@/utils/gsap'
 import { useCursor } from '@/context/CursorContext'
+import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 interface ArsenalCardProps {
   title: string
@@ -12,9 +13,10 @@ export function ArsenalCard({ title, category, imageSrc }: ArsenalCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
   const { setLabel } = useCursor()
+  const isTouch = useIsTouchDevice()
+  const [isActive, setIsActive] = useState(false)
 
-  const handleEnter = () => {
-    setLabel('[ EXPLORE ]')
+  const activate = () => {
     if (cardRef.current) {
       gsap.to(cardRef.current, { scale: 1.02, duration: 0.4, ease: 'monolith' })
       cardRef.current.style.willChange = 'transform'
@@ -22,10 +24,10 @@ export function ArsenalCard({ title, category, imageSrc }: ArsenalCardProps) {
     if (imgRef.current) {
       gsap.to(imgRef.current, { filter: 'grayscale(0)', duration: 0.4, ease: 'monolith' })
     }
+    setLabel('[ EXPLORE ]')
   }
 
-  const handleLeave = () => {
-    setLabel('')
+  const deactivate = () => {
     if (cardRef.current) {
       gsap.to(cardRef.current, { scale: 1, duration: 0.4, ease: 'monolith' })
       cardRef.current.style.willChange = 'auto'
@@ -33,13 +35,25 @@ export function ArsenalCard({ title, category, imageSrc }: ArsenalCardProps) {
     if (imgRef.current) {
       gsap.to(imgRef.current, { filter: 'grayscale(1)', duration: 0.4, ease: 'monolith' })
     }
+    setLabel('')
+  }
+
+  const handleTap = () => {
+    if (isActive) {
+      deactivate()
+      setIsActive(false)
+    } else {
+      activate()
+      setIsActive(true)
+    }
   }
 
   return (
     <div
       ref={cardRef}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
+      onMouseEnter={!isTouch ? activate : undefined}
+      onMouseLeave={!isTouch ? deactivate : undefined}
+      onPointerDown={isTouch ? handleTap : undefined}
       style={{
         position: 'relative',
         overflow: 'hidden',

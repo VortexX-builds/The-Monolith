@@ -25,6 +25,7 @@ function Track() {
 export function Marquee() {
   return (
     <div
+      className="marquee-wrap"
       style={{
         height: 56,
         margin: '72px 0',

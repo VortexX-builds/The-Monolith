@@ -13,6 +13,7 @@ export function Arsenal() {
   return (
     <section
       id="arsenal"
+      className="arsenal-section"
       style={{
         backgroundColor: '#0d141a',
         padding: '0 48px 120px',
@@ -32,6 +33,7 @@ export function Arsenal() {
           The Arsenal
         </p>
         <h2
+          className="arsenal-heading-title"
           style={{
             fontFamily: '"Monument Extended", sans-serif',
             fontWeight: 800,
@@ -46,6 +48,7 @@ export function Arsenal() {
       </div>
 
       <div
+        className="arsenal-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',

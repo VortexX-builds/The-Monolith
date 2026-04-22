@@ -47,6 +47,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
 
   return (
     <div
+      className="hero-headline"
       style={{
         position: 'absolute',
         inset: 0,
@@ -133,6 +134,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
         <div style={{ overflow: 'hidden', pointerEvents: 'auto' }}>
           <div
             ref={ctaRef}
+            className="hero-ctas"
             style={{
               display: 'flex',
               gap: 40,
@@ -173,6 +175,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
       <div style={{ overflow: 'hidden' }}>
         <div
           ref={statsRef}
+          className="hero-stats"
           style={{
             display: 'flex',
             gap: 32,

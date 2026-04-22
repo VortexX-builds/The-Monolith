@@ -1,6 +1,7 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { gsap, ScrollTrigger } from '@/utils/gsap'
 import { useCursor } from '@/context/CursorContext'
+import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
 
 interface RosterCardProps {
   name: string
@@ -17,14 +18,16 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
   const noiseRef = useRef<HTMLDivElement>(null)
   const imgRef = useRef<HTMLImageElement>(null)
   const { setLabel } = useCursor()
+  const isTouch = useIsTouchDevice()
+  const [isActive, setIsActive] = useState(false)
 
   useLayoutEffect(() => {
     const card = cardRef.current
-    const name = nameRef.current
-    const role = roleRef.current
-    if (!card || !name || !role) return
+    const nameEl = nameRef.current
+    const roleEl = roleRef.current
+    if (!card || !nameEl || !roleEl) return
 
-    gsap.set([name, role], { y: 40, opacity: 0 })
+    gsap.set([nameEl, roleEl], { y: 40, opacity: 0 })
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -32,8 +35,8 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
         start: 'top 85%',
         once: true,
         onEnter: () => {
-          gsap.to(name, { y: 0, opacity: 1, duration: 0.6, ease: 'monolith' })
-          gsap.to(role, { y: 0, opacity: 1, duration: 0.6, ease: 'monolith', delay: 0.08 })
+          gsap.to(nameEl, { y: 0, opacity: 1, duration: 0.6, ease: 'monolith' })
+          gsap.to(roleEl, { y: 0, opacity: 1, duration: 0.6, ease: 'monolith', delay: 0.08 })
         },
       })
     }, card)
@@ -41,7 +44,7 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
     return () => ctx.revert()
   }, [])
 
-  const handleEnter = () => {
+  const activate = () => {
     setLabel('[ EXPLORE ]')
     if (cardRef.current) {
       gsap.to(cardRef.current, { scale: 1.02, duration: 0.4, ease: 'monolith' })
@@ -55,7 +58,7 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
     }
   }
 
-  const handleLeave = () => {
+  const deactivate = () => {
     setLabel('')
     if (cardRef.current) {
       gsap.to(cardRef.current, { scale: 1, duration: 0.4, ease: 'monolith' })
@@ -69,11 +72,22 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
     }
   }
 
+  const handleTap = () => {
+    if (isActive) {
+      deactivate()
+      setIsActive(false)
+    } else {
+      activate()
+      setIsActive(true)
+    }
+  }
+
   return (
     <div
       ref={cardRef}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
+      onMouseEnter={!isTouch ? activate : undefined}
+      onMouseLeave={!isTouch ? deactivate : undefined}
+      onPointerDown={isTouch ? handleTap : undefined}
       style={{
         position: 'relative',
         padding: '40px',

@@ -95,6 +95,7 @@ export function Contact({ programme }: ContactProps) {
   return (
     <section
       id="contact"
+      className="contact-section"
       style={{
         backgroundColor: '#1B2228',
         padding: '120px 48px',
@@ -139,6 +140,7 @@ export function Contact({ programme }: ContactProps) {
       </div>
 
       <div
+        className="contact-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1.4fr',
@@ -256,6 +258,7 @@ export function Contact({ programme }: ContactProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={name}
+                className="contact-social-link"
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLAnchorElement).style.color = '#ffffff'
                 }}
@@ -362,6 +365,7 @@ export function Contact({ programme }: ContactProps) {
             <div>
               <button
                 type="submit"
+                className="contact-submit-btn"
                 onMouseEnter={() => setLabel('[ TRANSMIT ]')}
                 onMouseLeave={() => setLabel('')}
                 style={{

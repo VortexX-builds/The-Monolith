@@ -11,6 +11,7 @@ export function Roster() {
   return (
     <section
       id="roster"
+      className="roster-section"
       style={{
         backgroundColor: '#0d141a',
         padding: '0 48px 120px',
@@ -43,6 +44,7 @@ export function Roster() {
       </div>
 
       <div
+        className="roster-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 1fr)',

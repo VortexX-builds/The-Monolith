@@ -74,6 +74,7 @@ export function Config({ onProgrammeComplete }: ConfigProps) {
   return (
     <section
       id="configure"
+      className="config-section"
       style={{
         backgroundColor: '#1B2228',
         padding: '120px 48px',
@@ -120,6 +121,7 @@ export function Config({ onProgrammeComplete }: ConfigProps) {
         <div style={{ display: 'flex', gap: 16, marginTop: 64 }}>
           {step > 0 && (
             <button
+              className="config-nav-btn"
               onClick={() => animateStep(step - 1)}
               onMouseOver={e => {
                 e.currentTarget.style.background = '#2C302E'
@@ -140,6 +142,7 @@ export function Config({ onProgrammeComplete }: ConfigProps) {
           )}
           {!isLast ? (
             <button
+              className="config-nav-btn"
               onClick={() => animateStep(step + 1)}
               onMouseOver={e => {
                 e.currentTarget.style.background = '#ffffff'
@@ -159,6 +162,7 @@ export function Config({ onProgrammeComplete }: ConfigProps) {
             </button>
           ) : (
             <button
+              className="config-nav-btn"
               onClick={handleSubmit}
               onMouseOver={e => {
                 e.currentTarget.style.background = '#ffffff'

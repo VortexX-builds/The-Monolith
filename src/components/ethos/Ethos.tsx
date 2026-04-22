@@ -18,20 +18,36 @@ export function Ethos() {
     const track = trackRef.current
     if (!section || !inner || !track) return
 
-    const ctx = gsap.context(() => {
-      const trackWidth = track.scrollWidth - inner.offsetWidth
+    const isMobile = window.innerWidth < 1024
 
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top top',
-        end: 'bottom bottom',
-        pin: inner,
-        scrub: 1,
-        anticipatePin: 1,
-        onUpdate: (self) => {
-          gsap.set(track, { x: -self.progress * trackWidth })
-        },
-      })
+    const ctx = gsap.context(() => {
+      if (isMobile) {
+        const panels = track.querySelectorAll<HTMLElement>('.ethos-panel')
+        panels.forEach((panel) => {
+          gsap.set(panel, { opacity: 0, y: 40 })
+          ScrollTrigger.create({
+            trigger: panel,
+            start: 'top 85%',
+            once: true,
+            onEnter: () => {
+              gsap.to(panel, { opacity: 1, y: 0, duration: 0.6, ease: 'monolith' })
+            },
+          })
+        })
+      } else {
+        const trackWidth = track.scrollWidth - inner.offsetWidth
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          end: 'bottom bottom',
+          pin: inner,
+          scrub: 1,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            gsap.set(track, { x: -self.progress * trackWidth })
+          },
+        })
+      }
     }, section)
 
     return () => ctx.revert()
@@ -40,10 +56,12 @@ export function Ethos() {
   return (
     <div
       ref={sectionRef}
+      className="ethos-section"
       style={{ height: '300vh', backgroundColor: '#0d141a' }}
     >
       <div
         ref={innerRef}
+        className="ethos-inner"
         style={{
           height: '100vh',
           overflow: 'hidden',
@@ -53,6 +71,7 @@ export function Ethos() {
       >
         <div
           ref={trackRef}
+          className="ethos-track"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -63,18 +82,20 @@ export function Ethos() {
           }}
         >
           {STATEMENTS.map((statement) => (
-            <span
-              key={statement}
-              style={{
-                fontFamily: '"Monument Extended", sans-serif',
-                fontWeight: 800,
-                fontSize: 'clamp(48px, 8vw, 120px)',
-                color: '#ffffff',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              {statement}
-            </span>
+            <div key={statement} className="ethos-panel">
+              <span
+                style={{
+                  fontFamily: '"Monument Extended", sans-serif',
+                  fontWeight: 800,
+                  fontSize: 'clamp(48px, 8vw, 120px)',
+                  color: '#ffffff',
+                  letterSpacing: '-0.02em',
+                  display: 'block',
+                }}
+              >
+                {statement}
+              </span>
+            </div>
           ))}
         </div>
       </div>

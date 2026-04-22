@@ -10,6 +10,7 @@ interface ToggleButtonProps {
 export function ToggleButton({ id, label, selected, onToggle }: ToggleButtonProps) {
   return (
     <button
+      className="config-toggle-btn"
       onClick={() => onToggle(id)}
       onMouseEnter={e => {
         if (!selected) {

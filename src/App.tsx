@@ -10,6 +10,7 @@ import { Arsenal } from '@/components/arsenal/Arsenal'
 import { Roster } from '@/components/roster/Roster'
 import { Config } from '@/components/config/Config'
 import { Contact } from '@/components/contact/Contact'
+import { Footer } from '@/components/footer/Footer'
 
 export function App() {
   const [preloaderDone, setPreloaderDone] = useState(false)
@@ -35,6 +36,7 @@ export function App() {
           <Config onProgrammeComplete={setProgramme} />
           <Marquee />
           <Contact programme={programme} />
+          <Footer />
         </Root>
       </NavigationContext.Provider>
     </CursorProvider>
