@@ -1,5 +1,6 @@
 import { useRef, useMemo } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
+import type { MaterialNode } from '@react-three/fiber'
 import * as THREE from 'three'
 import { shaderMaterial } from '@react-three/drei'
 import { extend } from '@react-three/fiber'
@@ -22,7 +23,7 @@ extend({ ParticleMaterial })
 
 declare module '@react-three/fiber' {
   interface ThreeElements {
-    particleMaterial: React.ComponentPropsWithRef<typeof ParticleMaterial>
+    particleMaterial: MaterialNode<InstanceType<typeof ParticleMaterial>, typeof ParticleMaterial>
   }
 }
 
