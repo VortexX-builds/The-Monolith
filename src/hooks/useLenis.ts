@@ -21,6 +21,7 @@ export function useLenis(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return
 
+    window.scrollTo(0, 0)
     _lenis = new Lenis()
 
     _lenis.on('scroll', (e: LenisScrollData) => {
