@@ -5,6 +5,7 @@ import { useMousePosition } from '@/hooks/useMousePosition'
 
 export function HeroCanvas() {
   const mouseRef = useMousePosition()
+  const isMobile = window.innerWidth < 1024
 
   return (
     <div
@@ -22,7 +23,7 @@ export function HeroCanvas() {
         style={{ pointerEvents: 'none' }}
       >
         <ParticleSystem mouseRef={mouseRef} />
-        <HeroFigure mouseRef={mouseRef} />
+        {!isMobile && <HeroFigure mouseRef={mouseRef} />}
       </Canvas>
     </div>
   )
