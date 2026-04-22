@@ -2,6 +2,9 @@ import { useEffect, useLayoutEffect, useRef } from 'react'
 import { gsap } from '@/utils/gsap'
 import { useCursor } from '@/context/CursorContext'
 
+const isFinePointer = () =>
+  typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches
+
 export function Cursor() {
   const ringRef = useRef<HTMLDivElement>(null)
   const xGroupRef = useRef<HTMLDivElement>(null)
@@ -12,7 +15,7 @@ export function Cursor() {
 
   useLayoutEffect(() => {
     const ring = ringRef.current
-    if (!ring) return
+    if (!ring || !isFinePointer()) return
 
     const setX = gsap.quickSetter(ring, 'x', 'px')
     const setY = gsap.quickSetter(ring, 'y', 'px')
@@ -55,6 +58,8 @@ export function Cursor() {
     lineHeight: 1,
     userSelect: 'none',
   }
+
+  if (!isFinePointer()) return null
 
   return (
     <div
