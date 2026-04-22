@@ -130,7 +130,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
         </div>
 
         {/* CTAs */}
-        <div style={{ overflow: 'hidden' }}>
+        <div style={{ overflow: 'hidden', pointerEvents: 'auto' }}>
           <div
             ref={ctaRef}
             style={{
@@ -139,28 +139,32 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
               alignItems: 'center',
             }}
           >
-            <span
+            <a
+              href="#contact"
               style={{
                 fontFamily: '"Space Mono", monospace',
                 fontSize: 12,
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
                 color: '#ffffff',
+                textDecoration: 'none',
               }}
             >
               Join Now &rarr;
-            </span>
-            <span
+            </a>
+            <a
+              href="#arsenal"
               style={{
                 fontFamily: '"Space Mono", monospace',
                 fontSize: 12,
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
                 color: '#A8A9AD',
+                textDecoration: 'none',
               }}
             >
               Explore the Facility &rarr;
-            </span>
+            </a>
           </div>
         </div>
       </div>

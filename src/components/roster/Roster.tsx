@@ -2,9 +2,9 @@ import { RosterCard } from './RosterCard'
 
 const MEMBERS = [
   { name: 'Marcus Webb', role: 'Head Coach', metric: '12yr', metricLabel: 'experience', imageSrc: 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=800&auto=format&fit=crop&q=80' },
-  { name: 'Sienna Park', role: 'Strength & Conditioning', metric: '400+', metricLabel: 'athletes trained', imageSrc: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&auto=format&fit=crop&q=80' },
-  { name: 'Derek Okafor', role: 'Nutrition Lead', metric: '98%', metricLabel: 'client retention', imageSrc: 'https://images.unsplash.com/photo-1583454110738-61e72e44ea40?w=800&auto=format&fit=crop&q=80' },
-  { name: 'Lyra Chen', role: 'Mobility Specialist', metric: '8', metricLabel: 'certifications', imageSrc: 'https://images.unsplash.com/photo-1518310837-19ded5b5bdf4?w=800&auto=format&fit=crop&q=80' },
+  { name: 'Sienna Park', role: 'Strength & Conditioning', metric: '400+', metricLabel: 'athletes trained', imageSrc: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=800&auto=format&fit=crop&crop=faces&q=80' },
+  { name: 'Derek Okafor', role: 'Nutrition Lead', metric: '98%', metricLabel: 'client retention', imageSrc: 'https://plus.unsplash.com/premium_photo-1663050901483-ee8703cc8372?w=800&auto=format&fit=crop&crop=faces&q=80' },
+  { name: 'Lyra Chen', role: 'Mobility Specialist', metric: '8', metricLabel: 'certifications', imageSrc: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&auto=format&fit=crop&crop=faces&q=80' },
 ]
 
 export function Roster() {

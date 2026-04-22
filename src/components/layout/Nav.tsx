@@ -1,17 +1,22 @@
 import { useRef, useEffect, useState } from 'react'
 import { gsap } from '@/utils/gsap'
 import { subscribeToLenisScroll } from '@/hooks/useLenis'
+import { useCursor } from '@/context/CursorContext'
+import { useNavigation } from '@/context/NavigationContext'
 
 const NAV_LINKS = [
   { label: 'Arsenal', href: '#arsenal' },
   { label: 'Roster', href: '#roster' },
   { label: 'Configure', href: '#configure' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export function Nav() {
   const navRef = useRef<HTMLElement>(null)
   const hiddenRef = useRef(false)
   const [hoveredLink, setHoveredLink] = useState<string | null>(null)
+  const { setLabel } = useCursor()
+  const { navigateTo } = useNavigation()
 
   useEffect(() => {
     const unsub = subscribeToLenisScroll(({ velocity }) => {
@@ -60,8 +65,9 @@ export function Nav() {
           <a
             key={href}
             href={href}
-            onMouseEnter={() => setHoveredLink(href)}
-            onMouseLeave={() => setHoveredLink(null)}
+            onClick={(e) => { e.preventDefault(); navigateTo(href.slice(1)) }}
+            onMouseEnter={() => { setHoveredLink(href); setLabel('[ NAVIGATE ]') }}
+            onMouseLeave={() => { setHoveredLink(null); setLabel('') }}
             style={{
               fontFamily: '"Space Mono", monospace',
               fontSize: 11,

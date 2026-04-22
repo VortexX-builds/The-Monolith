@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 
-export type CursorLabel = '[ + ]' | '[ DRAG ]' | '[ EXPLORE ]' | '[ TRANSMIT ]' | ''
+export type CursorLabel = string
 
 interface CursorContextValue {
   label: CursorLabel
