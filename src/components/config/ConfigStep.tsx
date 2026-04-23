@@ -12,6 +12,7 @@ export function ConfigStep({ step, active, selections, onToggle }: ConfigStepPro
   return (
     <div style={{ display: active ? 'block' : 'none' }}>
       <h3
+        className="config-step-title"
         style={{
           fontFamily: '"Monument Extended", sans-serif',
           fontWeight: 800,

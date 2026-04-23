@@ -1,3 +1,5 @@
+import { useLayoutEffect, useRef } from 'react'
+import { gsap, ScrollTrigger } from '@/utils/gsap'
 import { ArsenalCard } from './ArsenalCard'
 
 const ITEMS = [
@@ -10,17 +12,38 @@ const ITEMS = [
 ]
 
 export function Arsenal() {
+  const headingBlockRef = useRef<HTMLDivElement>(null)
+  const labelRef = useRef<HTMLParagraphElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+
+  useLayoutEffect(() => {
+    const block = headingBlockRef.current
+    const label = labelRef.current
+    const title = titleRef.current
+    if (!block || !label || !title) return
+
+    gsap.set([label, title], { y: 40, opacity: 0 })
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: block,
+        start: 'top 80%',
+        once: true,
+        onEnter: () => {
+          gsap.to(label, { y: 0, opacity: 1, duration: 0.7, ease: 'monolith' })
+          gsap.to(title, { y: 0, opacity: 1, duration: 0.7, ease: 'monolith', delay: 0.1 })
+        },
+      })
+    }, block)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section
-      id="arsenal"
-      className="arsenal-section"
-      style={{
-        backgroundColor: '#0d141a',
-        padding: '0 48px',
-      }}
-    >
-      <div style={{ marginBottom: 80 }}>
+    <section id="arsenal" className="arsenal-section" style={{ backgroundColor: '#0d141a', padding: '0 48px' }}>
+      <div ref={headingBlockRef} className="arsenal-heading-block" style={{ marginBottom: 80 }}>
         <p
+          ref={labelRef}
           style={{
             fontFamily: '"Space Mono", monospace',
             fontSize: 11,
@@ -33,6 +56,7 @@ export function Arsenal() {
           The Arsenal
         </p>
         <h2
+          ref={titleRef}
           className="arsenal-heading-title"
           style={{
             fontFamily: '"Monument Extended", sans-serif',
@@ -55,8 +79,8 @@ export function Arsenal() {
           gap: 2,
         }}
       >
-        {ITEMS.map((item) => (
-          <ArsenalCard key={item.title} {...item} />
+        {ITEMS.map((item, i) => (
+          <ArsenalCard key={item.title} {...item} index={i} />
         ))}
       </div>
     </section>

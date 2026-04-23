@@ -118,7 +118,7 @@ export function Config({ onProgrammeComplete }: ConfigProps) {
           ))}
         </div>
 
-        <div style={{ display: 'flex', gap: 16, marginTop: 64 }}>
+        <div className="config-nav-row" style={{ display: 'flex', gap: 16, marginTop: 64 }}>
           {step > 0 && (
             <button
               className="config-nav-btn"

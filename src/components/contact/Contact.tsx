@@ -101,7 +101,7 @@ export function Contact({ programme }: ContactProps) {
         padding: '80px 48px',
       }}
     >
-      <div style={{ marginBottom: 80 }}>
+      <div className="contact-heading-block" style={{ marginBottom: 80 }}>
         <p
           style={{
             fontFamily: '"Space Mono", monospace',

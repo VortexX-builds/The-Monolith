@@ -97,7 +97,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
         </div>
 
         {/* YOUR LIMITS. */}
-        <div style={{ overflow: 'hidden', lineHeight: 1, marginBottom: 28 }}>
+        <div className="hero-tagline-block" style={{ overflow: 'hidden', lineHeight: 1, marginBottom: 28 }}>
           <span
             ref={taglineRef}
             style={{
@@ -114,7 +114,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
         </div>
 
         {/* Descriptor */}
-        <div style={{ overflow: 'hidden', marginBottom: 40 }}>
+        <div className="hero-desc-block" style={{ overflow: 'hidden', marginBottom: 40 }}>
           <p
             ref={descRef}
             style={{
