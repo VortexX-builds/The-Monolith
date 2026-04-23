@@ -101,44 +101,6 @@ export function Contact({ programme }: ContactProps) {
         padding: '80px 48px',
       }}
     >
-      <div className="contact-heading-block" style={{ marginBottom: 80 }}>
-        <p
-          style={{
-            fontFamily: '"Space Mono", monospace',
-            fontSize: 11,
-            letterSpacing: '0.18em',
-            color: '#A8A9AD',
-            textTransform: 'uppercase',
-            marginBottom: 24,
-          }}
-        >
-          Make Contact
-        </p>
-        <h2
-          style={{
-            fontFamily: '"Monument Extended", sans-serif',
-            fontWeight: 800,
-            fontSize: 'clamp(40px, 6vw, 90px)',
-            color: '#ffffff',
-            letterSpacing: '-0.02em',
-            marginBottom: 20,
-          }}
-        >
-          Get In.
-        </h2>
-        <p
-          style={{
-            fontFamily: '"Space Mono", monospace',
-            fontSize: 12,
-            letterSpacing: '0.1em',
-            color: '#A8A9AD',
-            textTransform: 'uppercase',
-          }}
-        >
-          Send a message — we'll be in touch.
-        </p>
-      </div>
-
       <div
         className="contact-grid"
         style={{
@@ -277,8 +239,46 @@ export function Contact({ programme }: ContactProps) {
           </div>
         </div>
 
-        {/* Right — Form */}
+        {/* Right — Heading + Form */}
         <div>
+          <div style={{ marginBottom: 56 }}>
+            <p
+              style={{
+                fontFamily: '"Space Mono", monospace',
+                fontSize: 11,
+                letterSpacing: '0.18em',
+                color: '#A8A9AD',
+                textTransform: 'uppercase',
+                marginBottom: 24,
+              }}
+            >
+              Make Contact
+            </p>
+            <h2
+              style={{
+                fontFamily: '"Monument Extended", sans-serif',
+                fontWeight: 800,
+                fontSize: 'clamp(40px, 6vw, 90px)',
+                color: '#ffffff',
+                letterSpacing: '-0.02em',
+                marginBottom: 20,
+              }}
+            >
+              Get In.
+            </h2>
+            <p
+              style={{
+                fontFamily: '"Space Mono", monospace',
+                fontSize: 12,
+                letterSpacing: '0.1em',
+                color: '#A8A9AD',
+                textTransform: 'uppercase',
+              }}
+            >
+              Send a message — we'll be in touch.
+            </p>
+          </div>
+
           {/* Programme summary — only shown when coming from Config */}
           {programme && (
             <div
