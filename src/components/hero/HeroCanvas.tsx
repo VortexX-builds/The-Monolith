@@ -23,7 +23,7 @@ export function HeroCanvas() {
         style={{ pointerEvents: 'none' }}
       >
         <ParticleSystem mouseRef={mouseRef} />
-        {!isMobile && <HeroFigure mouseRef={mouseRef} />}
+        <HeroFigure mouseRef={mouseRef} isMobile={isMobile} />
       </Canvas>
     </div>
   )

@@ -18,9 +18,10 @@ type P3 = [number, number, number]
 
 interface HeroFigureProps {
   mouseRef: MutableRefObject<{ x: number; y: number }>
+  isMobile?: boolean
 }
 
-export function HeroFigure({ mouseRef }: HeroFigureProps) {
+export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
   const groupRef = useRef<Group>(null)
   const orbitRef = useRef<Group>(null)
   const lerpedRot = useRef({ x: 0, y: 0 })
@@ -68,7 +69,7 @@ export function HeroFigure({ mouseRef }: HeroFigureProps) {
       orbitRef.current.rotation.y = (t / REVOLUTION_DURATION) * Math.PI * 2
     }
 
-    if (groupRef.current) {
+    if (!isMobile && groupRef.current) {
       const tx = mouseRef.current.y * -0.16
       const ty = mouseRef.current.x * 0.14
       lerpedRot.current.x += (tx - lerpedRot.current.x) * 0.04
@@ -78,21 +79,27 @@ export function HeroFigure({ mouseRef }: HeroFigureProps) {
     }
   })
 
+  const position: P3 = isMobile ? [1.6, -0.3, 0] : [2.9, -0.1, 0]
+  const mobileScale = isMobile ? 1.2 : 1
+  const glowOpacity = isMobile ? 0.15 : 0.08
+  const lineOpacity = isMobile ? 0.50 : 0.9
+  const tickOpacity = isMobile ? 0.38 : 0.85
+
   return (
-    <group ref={groupRef} position={[2.9, -0.1, 0]}>
+    <group ref={groupRef} position={position} scale={mobileScale}>
       <group ref={orbitRef} rotation={[ORBIT_TILT, 0, 0]}>
         <Line
           points={ringPoints}
           color="#c5c6ca"
           lineWidth={8}
-          opacity={0.08}
+          opacity={glowOpacity}
           transparent
         />
         <Line
           points={ringPoints}
           color={COLOR_ORBIT}
           lineWidth={1.5}
-          opacity={0.9}
+          opacity={lineOpacity}
           transparent
         />
 
@@ -102,7 +109,7 @@ export function HeroFigure({ mouseRef }: HeroFigureProps) {
             points={seg}
             color={COLOR_ORBIT}
             lineWidth={2}
-            opacity={0.85}
+            opacity={tickOpacity}
             transparent
           />
         ))}

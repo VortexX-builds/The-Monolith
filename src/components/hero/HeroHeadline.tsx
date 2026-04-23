@@ -172,7 +172,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
       </div>
 
       {/* Stats strip */}
-      <div style={{ overflow: 'hidden' }}>
+      <div className="hero-stats-wrap" style={{ overflow: 'hidden' }}>
         <div
           ref={statsRef}
           className="hero-stats"

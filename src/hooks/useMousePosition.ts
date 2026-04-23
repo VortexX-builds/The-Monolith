@@ -5,6 +5,7 @@ export function useMousePosition() {
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
+      if (e.pointerType === 'touch') return
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1
       mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1
     }

@@ -88,7 +88,10 @@ img {
   .hero-headline {
     padding: 80px 20px 40px !important;
     max-width: 100% !important;
+    justify-content: flex-start !important;
+    gap: 28px !important;
   }
+  .hero-stats-wrap { margin-top: auto !important; }
   .hero-ctas  { gap: 20px !important; flex-wrap: wrap !important; }
   .hero-stats { gap: 16px !important; flex-wrap: wrap !important; }
 
