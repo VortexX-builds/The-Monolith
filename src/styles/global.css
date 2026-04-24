@@ -89,10 +89,9 @@ img {
     padding: 80px 20px 40px !important;
     max-width: 100% !important;
     justify-content: flex-start !important;
-    gap: 40px !important;
+    gap: 28px !important;
   }
-  .hero-tagline-block { margin-bottom: 36px !important; }
-  .hero-desc-block    { margin-bottom: 48px !important; }
+  .hero-stats-wrap { margin-top: auto !important; }
   .hero-ctas  { gap: 20px !important; flex-wrap: wrap !important; }
   .hero-stats { gap: 16px !important; flex-wrap: wrap !important; }
 
@@ -147,8 +146,8 @@ img {
 /* ─── Small phones: ≤ 479px ─────────────────────────────── */
 @media (max-width: 479px) {
   .hero-headline      { padding: 70px 16px 32px !important; }
-  .hero-tagline-block { margin-bottom: 22px !important; }
-  .hero-desc-block    { margin-bottom: 32px !important; }
+  .hero-tagline-block { margin-bottom: 16px !important; }
+  .hero-desc-block    { margin-bottom: 24px !important; }
   .arsenal-section    { padding-left: 16px !important; padding-right: 16px !important; padding-top: 60px !important; padding-bottom: 60px !important; }
   .arsenal-heading-block { margin-bottom: 32px !important; }
   .roster-section     { padding-left: 16px !important; padding-right: 16px !important; padding-top: 60px !important; padding-bottom: 60px !important; }
