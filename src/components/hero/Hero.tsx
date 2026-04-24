@@ -11,7 +11,7 @@ export function Hero({ visible }: HeroProps) {
       id="hero"
       style={{
         position: 'relative',
-        height: '100dvh',
+        height: '100svh',
         width: '100%',
         backgroundColor: '#0d141a',
         overflow: 'hidden',

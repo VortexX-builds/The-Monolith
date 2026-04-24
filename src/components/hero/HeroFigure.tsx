@@ -29,6 +29,12 @@ export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
   const orbitRef = useRef<Group>(null)
   const lerpedRot = useRef({ x: 0, y: 0 })
   const { size } = useThree()
+  // Freeze the height at first valid render — size.height updates reactively when the
+  // mobile browser's address bar collapses, which would cause mobileY and orbitTilt
+  // to instantly recalculate and produce a visible jerk.
+  const frozenHeight = useRef(0)
+  if (size.height > 0 && !frozenHeight.current) frozenHeight.current = size.height
+  const stableHeight = frozenHeight.current || size.height
 
   const wordOffset = isMobile ? 0.26 : 0.22
   const orbitWords = useMemo(() =>
@@ -84,7 +90,7 @@ export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
     }
   })
 
-  const mobileY = Math.max(-1.6, CAMERA_HALF_HEIGHT * (1 - 2 * (RING_PIXEL_Y / size.height)))
+  const mobileY = Math.max(-1.6, CAMERA_HALF_HEIGHT * (1 - 2 * (RING_PIXEL_Y / stableHeight)))
   const position: P3 = isMobile ? [1.6, mobileY, 0] : [2.75, -0.1, 0]
   const mobileScale = isMobile ? 1.2 : 1
   const glowOpacity = isMobile ? 0.15 : 0.08
@@ -93,7 +99,7 @@ export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
 
   return (
     <group ref={groupRef} position={position} scale={mobileScale}>
-      <group ref={orbitRef} rotation={[isMobile ? ORBIT_TILT + 0.2 * Math.max(0, (size.height - 667) / 265) : ORBIT_TILT, 0, 0]}>
+      <group ref={orbitRef} rotation={[isMobile ? ORBIT_TILT + 0.2 * Math.max(0, (stableHeight - 667) / 265) : ORBIT_TILT, 0, 0]}>
         <Line
           points={ringPoints}
           color="#c5c6ca"
