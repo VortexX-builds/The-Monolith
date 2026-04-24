@@ -79,7 +79,8 @@ export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
     }
   })
 
-  const position: P3 = isMobile ? [1.6, -0.45, 0] : [2.9, -0.1, 0]
+  const mobileRingY = window.innerHeight < 750 ? -0.95 : -0.45
+  const position: P3 = isMobile ? [1.6, mobileRingY, 0] : [2.9, -0.1, 0]
   const mobileScale = isMobile ? 1.2 : 1
   const glowOpacity = isMobile ? 0.15 : 0.08
   const lineOpacity = isMobile ? 0.50 : 0.9
