@@ -11,7 +11,6 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
   const taglineRef = useRef<HTMLSpanElement>(null)
   const descRef    = useRef<HTMLParagraphElement>(null)
   const ctaRef     = useRef<HTMLDivElement>(null)
-  const statsRef   = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     const els = [
@@ -20,7 +19,6 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
       taglineRef.current,
       descRef.current,
       ctaRef.current,
-      statsRef.current,
     ]
     gsap.set(els, { y: '100%', opacity: 0 })
   }, [])
@@ -33,7 +31,6 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
       taglineRef.current,
       descRef.current,
       ctaRef.current,
-      statsRef.current,
     ]
     gsap.to(els, {
       y: '0%',
@@ -171,33 +168,8 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
         </div>
       </div>
 
-      {/* Stats strip */}
-      <div className="hero-stats-wrap" style={{ overflow: 'hidden' }}>
-        <div
-          ref={statsRef}
-          className="hero-stats"
-          style={{
-            display: 'flex',
-            gap: 32,
-            alignItems: 'center',
-          }}
-        >
-          {['5 ZONES', '24K SQ FT', 'OPEN 24/7', 'EST. 2024'].map((stat, i, arr) => (
-            <span
-              key={stat}
-              style={{
-                fontFamily: '"Space Mono", monospace',
-                fontSize: 11,
-                letterSpacing: '0.14em',
-                color: i < arr.length - 1 ? '#A8A9AD' : '#555b62',
-                textTransform: 'uppercase',
-              }}
-            >
-              {stat}
-            </span>
-          ))}
-        </div>
-      </div>
+      {/* Bottom spacer — holds space-between vertical distribution after stats strip removal */}
+      <div aria-hidden="true" />
     </div>
   )
 }

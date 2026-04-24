@@ -159,6 +159,23 @@ export function Contact({ programme }: ContactProps) {
             chasing strength, endurance, or your next level, this is where the work gets done.
           </p>
 
+          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+            {['5 ZONES', '24K SQ FT', 'OPEN 24/7', 'EST. 2024'].map((stat) => (
+              <span
+                key={stat}
+                style={{
+                  fontFamily: '"Space Mono", monospace',
+                  fontSize: 11,
+                  letterSpacing: '0.14em',
+                  color: '#A8A9AD',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {stat}
+              </span>
+            ))}
+          </div>
+
           <div style={{ height: 1, backgroundColor: '#2C302E' }} />
 
           {/* Contact Info */}

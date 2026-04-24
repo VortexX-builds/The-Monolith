@@ -91,9 +91,7 @@ img {
     justify-content: flex-start !important;
     gap: 28px !important;
   }
-  .hero-stats-wrap { margin-top: auto !important; }
   .hero-ctas  { gap: 20px !important; flex-wrap: wrap !important; }
-  .hero-stats { gap: 16px !important; flex-wrap: wrap !important; }
 
   /* Arsenal */
   .arsenal-section  { padding-left: 20px !important; padding-right: 20px !important; padding-top: 80px !important; padding-bottom: 80px !important; }

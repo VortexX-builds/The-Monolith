@@ -1,5 +1,5 @@
 import { useRef, useMemo } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { Line, Html } from '@react-three/drei'
 import type { Group } from 'three'
 import type { MutableRefObject } from 'react'
@@ -21,24 +21,29 @@ interface HeroFigureProps {
   isMobile?: boolean
 }
 
+const CAMERA_HALF_HEIGHT = 5 * Math.tan(Math.PI / 6) // camera Z=5, FOV=60° → ≈2.887 world units
+const RING_PIXEL_Y = 560 // pixel from top that looks right on iPhone SE (667px reference)
+
 export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
   const groupRef = useRef<Group>(null)
   const orbitRef = useRef<Group>(null)
   const lerpedRot = useRef({ x: 0, y: 0 })
+  const { size } = useThree()
 
+  const wordOffset = isMobile ? 0.26 : 0.22
   const orbitWords = useMemo(() =>
     DISCIPLINES.map((word, i) => {
       const angle = (i / DISCIPLINES.length) * Math.PI * 2
       return {
         word,
         position: [
-          Math.cos(angle) * (ORBIT_RADIUS + 0.22),
+          Math.cos(angle) * (ORBIT_RADIUS + wordOffset),
           0,
-          Math.sin(angle) * (ORBIT_RADIUS + 0.22),
+          Math.sin(angle) * (ORBIT_RADIUS + wordOffset),
         ] as P3,
       }
     }),
-    [])
+    [wordOffset])
 
   const ringPoints = useMemo<P3[]>(() => {
     const N = 96
@@ -79,7 +84,8 @@ export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
     }
   })
 
-  const position: P3 = isMobile ? [1.6, -0.7, 0] : [2.9, -0.1, 0]
+  const mobileY = Math.max(-1.6, CAMERA_HALF_HEIGHT * (1 - 2 * (RING_PIXEL_Y / size.height)))
+  const position: P3 = isMobile ? [1.6, mobileY, 0] : [2.75, -0.1, 0]
   const mobileScale = isMobile ? 1.2 : 1
   const glowOpacity = isMobile ? 0.15 : 0.08
   const lineOpacity = isMobile ? 0.50 : 0.9
@@ -87,7 +93,7 @@ export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
 
   return (
     <group ref={groupRef} position={position} scale={mobileScale}>
-      <group ref={orbitRef} rotation={[ORBIT_TILT, 0, 0]}>
+      <group ref={orbitRef} rotation={[isMobile ? ORBIT_TILT + 0.2 * Math.max(0, (size.height - 667) / 265) : ORBIT_TILT, 0, 0]}>
         <Line
           points={ringPoints}
           color="#c5c6ca"
@@ -114,14 +120,15 @@ export function HeroFigure({ mouseRef, isMobile = false }: HeroFigureProps) {
           />
         ))}
 
-        {!isMobile && orbitWords.map(({ word, position }) => (
+        {orbitWords.map(({ word, position }) => (
           <Html key={word} position={position} center style={{ pointerEvents: 'none' }}>
             <span
               style={{
                 fontFamily: "'Space Mono', monospace",
-                fontSize: '11px',
+                fontSize: isMobile ? '10px' : '11px',
                 letterSpacing: '0.13em',
-                color: '#c5c6ca',
+                color: isMobile ? '#A8A9AD' : '#c5c6ca',
+                opacity: isMobile ? 0.85 : 1,
                 whiteSpace: 'nowrap',
                 userSelect: 'none',
               }}
