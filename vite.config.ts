@@ -9,4 +9,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  preview: {
+    port: parseInt(process.env.PORT || '8080'),
+    host: true,
+  },
 })
