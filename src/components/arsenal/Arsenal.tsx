@@ -1,22 +1,26 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap, ScrollTrigger } from '@/utils/gsap'
+import { useScrollTriggerActive } from '@/hooks/useScrollTriggerActive'
 import { ArsenalCard } from './ArsenalCard'
 
 const ITEMS = [
-  { title: 'Power Rack', category: 'Strength', imageSrc: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop&q=80' },
-  { title: 'Olympic Platform', category: 'Olympic', imageSrc: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&auto=format&fit=crop&q=80' },
-  { title: 'Cable System', category: 'Accessory', imageSrc: 'https://images.unsplash.com/photo-1767552273968-da3464e2986c?w=600&auto=format&fit=crop&q=80' },
-  { title: 'Conditioning Floor', category: 'Cardio', imageSrc: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=600&auto=format&fit=crop&q=80' },
-  { title: 'Turf Lane', category: 'Functional', imageSrc: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&auto=format&fit=crop&q=80' },
-  { title: 'Recovery Zone', category: 'Recovery', imageSrc: 'https://images.unsplash.com/photo-1591741535585-9c4f52b3f13f?w=600&auto=format&fit=crop&q=80' },
+  { title: 'Power Rack', category: 'Strength', imageSrc: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop&q=60&fm=webp' },
+  { title: 'Olympic Platform', category: 'Olympic', imageSrc: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&auto=format&fit=crop&q=60&fm=webp' },
+  { title: 'Cable System', category: 'Accessory', imageSrc: 'https://images.unsplash.com/photo-1767552273968-da3464e2986c?w=600&auto=format&fit=crop&q=60&fm=webp' },
+  { title: 'Conditioning Floor', category: 'Cardio', imageSrc: 'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=600&auto=format&fit=crop&q=60&fm=webp' },
+  { title: 'Turf Lane', category: 'Functional', imageSrc: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&auto=format&fit=crop&q=60&fm=webp' },
+  { title: 'Recovery Zone', category: 'Recovery', imageSrc: 'https://images.unsplash.com/photo-1591741535585-9c4f52b3f13f?w=600&auto=format&fit=crop&q=60&fm=webp' },
 ]
 
 export function Arsenal() {
   const headingBlockRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLParagraphElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
+  const active = useScrollTriggerActive()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!active) return
+
     const block = headingBlockRef.current
     const label = labelRef.current
     const title = titleRef.current
@@ -37,7 +41,7 @@ export function Arsenal() {
     }, block)
 
     return () => ctx.revert()
-  }, [])
+  }, [active])
 
   return (
     <section id="arsenal" className="arsenal-section" style={{ backgroundColor: '#0d141a', padding: '0 48px' }}>

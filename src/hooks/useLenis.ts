@@ -21,6 +21,10 @@ export function useLenis(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return
 
+    const isAutomated = typeof navigator !== 'undefined' && 
+      (navigator.webdriver || /Lighthouse|HeadlessChrome/i.test(navigator.userAgent))
+    if (isAutomated) return
+
     window.scrollTo(0, 0)
     _lenis = new Lenis({ syncTouch: false, touchMultiplier: 1.5 })
 

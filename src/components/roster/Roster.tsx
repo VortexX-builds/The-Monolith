@@ -1,20 +1,24 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap, ScrollTrigger } from '@/utils/gsap'
+import { useScrollTriggerActive } from '@/hooks/useScrollTriggerActive'
 import { RosterCard } from './RosterCard'
 
 const MEMBERS = [
-  { name: 'Marcus Webb', role: 'Head Coach', metric: '12yr', metricLabel: 'experience', imageSrc: 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=800&auto=format&fit=crop&q=80' },
-  { name: 'Sienna Park', role: 'Strength & Conditioning', metric: '400+', metricLabel: 'athletes trained', imageSrc: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=800&auto=format&fit=crop&crop=faces&q=80' },
-  { name: 'Derek Okafor', role: 'Nutrition Lead', metric: '98%', metricLabel: 'client retention', imageSrc: 'https://plus.unsplash.com/premium_photo-1663050901483-ee8703cc8372?w=800&auto=format&fit=crop&crop=faces&q=80' },
-  { name: 'Lyra Chen', role: 'Mobility Specialist', metric: '8', metricLabel: 'certifications', imageSrc: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&auto=format&fit=crop&crop=faces&q=80' },
+  { name: 'Marcus Webb', role: 'Head Coach', metric: '12yr', metricLabel: 'experience', imageSrc: 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=600&auto=format&fit=crop&q=60&fm=webp' },
+  { name: 'Sienna Park', role: 'Strength & Conditioning', metric: '400+', metricLabel: 'athletes trained', imageSrc: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600&auto=format&fit=crop&crop=faces&q=60&fm=webp' },
+  { name: 'Derek Okafor', role: 'Nutrition Lead', metric: '98%', metricLabel: 'client retention', imageSrc: 'https://plus.unsplash.com/premium_photo-1663050901483-ee8703cc8372?w=600&auto=format&fit=crop&crop=faces&q=60&fm=webp' },
+  { name: 'Lyra Chen', role: 'Mobility Specialist', metric: '8', metricLabel: 'certifications', imageSrc: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&auto=format&fit=crop&crop=faces&q=60&fm=webp' },
 ]
 
 export function Roster() {
   const headingBlockRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLParagraphElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
+  const active = useScrollTriggerActive()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!active) return
+
     const block = headingBlockRef.current
     const label = labelRef.current
     const title = titleRef.current
@@ -35,7 +39,7 @@ export function Roster() {
     }, block)
 
     return () => ctx.revert()
-  }, [])
+  }, [active])
 
   return (
     <section id="roster" className="roster-section" style={{ backgroundColor: '#0d141a', padding: '0 48px' }}>

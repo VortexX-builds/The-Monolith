@@ -98,7 +98,7 @@ export function Config({ onProgrammeComplete }: ConfigProps) {
             fontFamily: '"Space Mono", monospace',
             fontSize: 11,
             letterSpacing: '0.18em',
-            color: '#4B5563',
+            color: '#A8A9AD',
             textTransform: 'uppercase',
             marginBottom: 48,
           }}

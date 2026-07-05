@@ -32,7 +32,7 @@ export function Footer() {
           fontFamily: '"Space Mono", monospace',
           fontSize: 10,
           letterSpacing: '0.14em',
-          color: '#4B5563',
+          color: '#A8A9AD',
           textTransform: 'uppercase',
         }}
       >

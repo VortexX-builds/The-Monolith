@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type React from 'react'
 import { useCursor } from '@/context/CursorContext'
 import { CONFIG_STEPS } from '@/constants/config-options'
-import logoSrc from '@/assets/logo-removebg.png'
+import logoSrc from '@/assets/logo-removebg.webp'
 
 const MONOLITH_EASE = 'cubic-bezier(0.8, 0, 0.1, 1)'
 
@@ -114,8 +114,11 @@ export function Contact({ programme }: ContactProps) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
           <img
             src={logoSrc}
-            alt="The Monolith"
-            style={{ width: 100, filter: 'grayscale(1)', display: 'block' }}
+            alt="The Monolith Logo"
+            width={100}
+            height={100}
+            loading="lazy"
+            style={{ width: 100, height: 100, filter: 'grayscale(1)', display: 'block' }}
           />
 
           <div>
@@ -338,8 +341,9 @@ export function Contact({ programme }: ContactProps) {
             style={{ display: 'flex', flexDirection: 'column', gap: 40 }}
           >
             <div>
-              <label style={labelStyle}>Name</label>
+              <label htmlFor="contact-name" style={labelStyle}>Name</label>
               <input
+                id="contact-name"
                 type="text"
                 required
                 value={form.name}
@@ -351,8 +355,9 @@ export function Contact({ programme }: ContactProps) {
             </div>
 
             <div>
-              <label style={labelStyle}>Number</label>
+              <label htmlFor="contact-phone" style={labelStyle}>Number</label>
               <input
+                id="contact-phone"
                 type="tel"
                 value={form.phone}
                 onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
@@ -363,8 +368,9 @@ export function Contact({ programme }: ContactProps) {
             </div>
 
             <div>
-              <label style={labelStyle}>Message</label>
+              <label htmlFor="contact-message" style={labelStyle}>Message</label>
               <textarea
+                id="contact-message"
                 required
                 rows={5}
                 value={form.message}

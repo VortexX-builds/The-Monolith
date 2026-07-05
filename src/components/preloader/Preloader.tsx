@@ -20,36 +20,24 @@ export function Preloader({ onComplete }: PreloaderProps) {
     const container = containerRef.current
     if (!container) return
 
-    const MIN_DURATION = 800
-    const start = Date.now()
-
-    const fontsReady = document.fonts.ready
-
-    fontsReady.then(() => {
-      const elapsed = Date.now() - start
-      const remaining = Math.max(0, MIN_DURATION - elapsed)
-
-      setTimeout(() => {
-        const tl = gsap.timeline({
-          onComplete: () => {
-            gsap.to(container, {
-              scaleY: 0,
-              transformOrigin: 'top',
-              duration: 0.6,
-              ease: 'monolith',
-              onComplete,
-            })
-          },
-        })
-
-        tl.to(charsRef.current, {
-          y: '0%',
-          stagger: 0.05,
-          duration: 0.6,
+    const tl = gsap.timeline({
+      onComplete: () => {
+        gsap.to(container, {
+          scaleY: 0,
+          transformOrigin: 'top',
+          duration: 0.3,
           ease: 'monolith',
-        }).to({}, { duration: 0.3 })
-      }, remaining)
+          onComplete,
+        })
+      },
     })
+
+    tl.to(charsRef.current, {
+      y: '0%',
+      stagger: 0.015,
+      duration: 0.25,
+      ease: 'monolith',
+    }).to({}, { duration: 0.05 })
   }, [onComplete])
 
   return (

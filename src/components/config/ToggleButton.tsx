@@ -12,6 +12,7 @@ export function ToggleButton({ id, label, selected, onToggle }: ToggleButtonProp
     <button
       className="config-toggle-btn"
       onClick={() => onToggle(id)}
+      aria-pressed={selected}
       onMouseEnter={e => {
         if (!selected) {
           e.currentTarget.style.background = '#2C302E'

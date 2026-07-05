@@ -1,7 +1,8 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap, ScrollTrigger } from '@/utils/gsap'
 import { useCursor } from '@/context/CursorContext'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
+import { useScrollTriggerActive } from '@/hooks/useScrollTriggerActive'
 
 interface ArsenalCardProps {
   title: string
@@ -18,8 +19,11 @@ export function ArsenalCard({ title, category, imageSrc, index }: ArsenalCardPro
   const { setLabel } = useCursor()
   const isTouch = useIsTouchDevice()
   const [isActive, setIsActive] = useState(false)
+  const active = useScrollTriggerActive()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!active) return
+
     const card = cardRef.current
     const categoryEl = categoryRef.current
     const titleEl = titleRef.current
@@ -48,7 +52,7 @@ export function ArsenalCard({ title, category, imageSrc, index }: ArsenalCardPro
     }, card)
 
     return () => ctx.revert()
-  }, [])
+  }, [active])
 
   const activate = () => {
     if (cardRef.current) {
@@ -82,6 +86,15 @@ export function ArsenalCard({ title, category, imageSrc, index }: ArsenalCardPro
     }
   }
 
+  const cleanImageSrc = imageSrc.split('?')[0]
+  const queryParams = new URLSearchParams(imageSrc.split('?')[1] || '')
+  const getSrcSet = (w: number) => {
+    const q = new URLSearchParams(queryParams)
+    q.set('w', w.toString())
+    return `${cleanImageSrc}?${q.toString()} ${w}w`
+  }
+  const srcSet = `${getSrcSet(400)}, ${getSrcSet(600)}, ${getSrcSet(800)}, ${getSrcSet(1200)}`
+
   return (
     <div
       ref={cardRef}
@@ -97,6 +110,11 @@ export function ArsenalCard({ title, category, imageSrc, index }: ArsenalCardPro
       <img
         ref={imgRef}
         src={imageSrc}
+        srcSet={srcSet}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        width={400}
+        height={500}
+        loading="lazy"
         alt={title}
         style={{
           width: '100%',

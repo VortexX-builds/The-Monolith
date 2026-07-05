@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from '@/utils/gsap'
 import { useCursor } from '@/context/CursorContext'
 
@@ -10,38 +10,41 @@ export function Cursor() {
   const xGroupRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLSpanElement>(null)
   const { label } = useCursor()
-  const mouse = useRef({ x: 0, y: 0 })
-  const pos = useRef({ x: 0, y: 0 })
 
-  useLayoutEffect(() => {
+  const [initialized, setInitialized] = useState(false)
+
+  useEffect(() => {
+    if (!isFinePointer()) return
+
+    const handleFirstMove = () => {
+      setInitialized(true)
+      window.removeEventListener('pointermove', handleFirstMove)
+    }
+    window.addEventListener('pointermove', handleFirstMove)
+    return () => window.removeEventListener('pointermove', handleFirstMove)
+  }, [])
+
+  useEffect(() => {
+    if (!initialized) return
     const ring = ringRef.current
-    if (!ring || !isFinePointer()) return
+    if (!ring) return
 
     const setX = gsap.quickSetter(ring, 'x', 'px')
     const setY = gsap.quickSetter(ring, 'y', 'px')
 
     const onMove = (e: PointerEvent) => {
-      mouse.current.x = e.clientX
-      mouse.current.y = e.clientY
+      setX(e.clientX)
+      setY(e.clientY)
     }
     window.addEventListener('pointermove', onMove)
 
-    const tick = () => {
-      pos.current.x += (mouse.current.x - pos.current.x) * 0.1
-      pos.current.y += (mouse.current.y - pos.current.y) * 0.1
-      setX(pos.current.x)
-      setY(pos.current.y)
-    }
-    gsap.ticker.add(tick)
-
     return () => {
       window.removeEventListener('pointermove', onMove)
-      gsap.ticker.remove(tick)
     }
-  }, [])
+  }, [initialized])
 
   useEffect(() => {
-    if (!labelRef.current || !xGroupRef.current) return
+    if (!initialized || !labelRef.current || !xGroupRef.current) return
     if (label) {
       gsap.to(xGroupRef.current, { opacity: 0, duration: 0.2, ease: 'monolith' })
       gsap.to(labelRef.current, { opacity: 1, duration: 0.2, ease: 'monolith' })
@@ -49,7 +52,7 @@ export function Cursor() {
       gsap.to(xGroupRef.current, { opacity: 1, duration: 0.2, ease: 'monolith' })
       gsap.to(labelRef.current, { opacity: 0, duration: 0.2, ease: 'monolith' })
     }
-  }, [label])
+  }, [label, initialized])
 
   const bracket: React.CSSProperties = {
     fontFamily: '"Space Mono", monospace',

@@ -3,7 +3,7 @@
   src: url('/fonts/MonumentExtended-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   src: url('/fonts/MonumentExtended-Ultrabold.woff2') format('woff2');
   font-weight: 800;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }
 
 @font-face {
@@ -19,5 +19,5 @@
   src: url('/fonts/SpaceMono-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }

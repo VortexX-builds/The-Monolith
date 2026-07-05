@@ -1,7 +1,8 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap, ScrollTrigger } from '@/utils/gsap'
 import { useCursor } from '@/context/CursorContext'
 import { useIsTouchDevice } from '@/hooks/useIsTouchDevice'
+import { useScrollTriggerActive } from '@/hooks/useScrollTriggerActive'
 
 interface RosterCardProps {
   name: string
@@ -22,8 +23,11 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
   const { setLabel } = useCursor()
   const isTouch = useIsTouchDevice()
   const [isActive, setIsActive] = useState(false)
+  const active = useScrollTriggerActive()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    if (!active) return
+
     const card = cardRef.current
     const roleLabelEl = roleLabelRef.current
     const nameEl = nameRef.current
@@ -54,7 +58,7 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
     }, card)
 
     return () => ctx.revert()
-  }, [])
+  }, [active])
 
   const activate = () => {
     setLabel('[ EXPLORE ]')
@@ -94,6 +98,15 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
     }
   }
 
+  const cleanImageSrc = imageSrc.split('?')[0]
+  const queryParams = new URLSearchParams(imageSrc.split('?')[1] || '')
+  const getSrcSet = (w: number) => {
+    const q = new URLSearchParams(queryParams)
+    q.set('w', w.toString())
+    return `${cleanImageSrc}?${q.toString()} ${w}w`
+  }
+  const srcSet = `${getSrcSet(400)}, ${getSrcSet(600)}, ${getSrcSet(800)}, ${getSrcSet(1200)}`
+
   return (
     <div
       ref={cardRef}
@@ -110,6 +123,11 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
       <img
         ref={imgRef}
         src={imageSrc}
+        srcSet={srcSet}
+        sizes="(max-width: 768px) 100vw, 50vw"
+        width={600}
+        height={800}
+        loading="lazy"
         alt={name}
         style={{
           position: 'absolute',
@@ -137,7 +155,7 @@ export function RosterCard({ name, role, metric, metricLabel, imageSrc }: Roster
         style={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: 'url(/textures/noise-tile.png)',
+          backgroundImage: 'url(/textures/noise-tile.webp)',
           backgroundSize: '256px 256px',
           mixBlendMode: 'overlay',
           opacity: 0,

@@ -7,7 +7,7 @@ export function NoiseOverlay() {
         inset: 0,
         pointerEvents: 'none',
         zIndex: 1000,
-        backgroundImage: 'url(/textures/noise-tile.png)',
+        backgroundImage: 'url(/textures/noise-tile.webp)',
         backgroundSize: '256px 256px',
         opacity: 0.035,
         mixBlendMode: 'overlay',

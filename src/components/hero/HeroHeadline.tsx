@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap } from '@/utils/gsap'
 
 interface HeroHeadlineProps {
@@ -12,18 +12,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
   const descRef    = useRef<HTMLParagraphElement>(null)
   const ctaRef     = useRef<HTMLDivElement>(null)
 
-  useLayoutEffect(() => {
-    const els = [
-      labelRef.current,
-      defineRef.current,
-      taglineRef.current,
-      descRef.current,
-      ctaRef.current,
-    ]
-    gsap.set(els, { y: '100%', opacity: 0 })
-  }, [])
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!visible) return
     const els = [
       labelRef.current,
@@ -32,14 +21,20 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
       descRef.current,
       ctaRef.current,
     ]
-    gsap.to(els, {
-      y: '0%',
-      opacity: 1,
-      stagger: 0.09,
-      duration: 0.75,
-      ease: 'monolith',
-      delay: 0.1,
-    })
+    const timer = setTimeout(() => {
+      gsap.fromTo(els,
+        { y: '100%', opacity: 0 },
+        {
+          y: '0%',
+          opacity: 1,
+          stagger: 0.04,
+          duration: 0.45,
+          ease: 'monolith',
+          delay: 0.05,
+        }
+      )
+    }, 300)
+    return () => clearTimeout(timer)
   }, [visible])
 
   return (
@@ -68,6 +63,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
             letterSpacing: '0.18em',
             color: '#A8A9AD',
             textTransform: 'uppercase',
+            opacity: 0,
           }}
         >
           Elite Strength &amp; Conditioning
@@ -87,6 +83,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
               fontSize: 'clamp(64px, 9vw, 144px)',
               letterSpacing: '-0.02em',
               color: '#ffffff',
+              opacity: 0,
             }}
           >
             DEFINE.
@@ -104,6 +101,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
               fontSize: 'clamp(28px, 3.8vw, 62px)',
               letterSpacing: '-0.02em',
               color: '#c5c6ca',
+              opacity: 0,
             }}
           >
             YOUR LIMITS.
@@ -120,6 +118,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
               lineHeight: 1.7,
               color: '#A8A9AD',
               letterSpacing: '0.02em',
+              opacity: 0,
             }}
           >
             Built for the serious.<br />
@@ -136,6 +135,7 @@ export function HeroHeadline({ visible }: HeroHeadlineProps) {
               display: 'flex',
               gap: 40,
               alignItems: 'center',
+              opacity: 0,
             }}
           >
             <a

@@ -1,0 +1,11 @@
+# The Monolith Athletic Club
+
+The Monolith is a cinematic, industrial-style athletic club designed for those who train with intent. No shortcuts, no excuses, no limits.
+
+## Information
+- [The Monolith Website](http://localhost:4173/) - Official web app home
+- [Ethos](http://localhost:4173/#ethos) - Our core training philosophy
+- [Arsenal](http://localhost:4173/#arsenal) - High-performance equipment details
+- [Roster](http://localhost:4173/#roster) - Professional coaching profiles
+- [Configure](http://localhost:4173/#configure) - Membership configurator
+- [Contact](http://localhost:4173/#contact) - Get in touch
